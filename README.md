@@ -23,6 +23,13 @@ sudo make deps
 ## Root with Magisk
 Follow [InitialSetup](docs/InitialSetup.md) (Unlock bootloader)
 
+## Install updates
+1. Download update with [Oxygen Updater](https://play.google.com/store/apps/details?id=com.arjanvlek.oxygenupdater)
+2. Whilst **not** rebooting yet, follow the installation instructions
+3. Navigate to `Magisk`->`Install`->`Install to interactive Slot (After OTA)`
+4. Click on `Let's Go` to start installing magisk to the update.
+5. Reboot the device
+
 ## References
 - [Raymo111/oneplus-7t-root](https://github.com/Raymo111/oneplus-7t-root)
 - [ssut/payload-dumper-go](https://github.com/ssut/payload-dumper-go)
