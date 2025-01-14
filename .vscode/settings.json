@@ -1,0 +1,9 @@
+{
+    "files.exclude": {
+     "**/.git": false
+    },
+    "terminal.integrated.inheritEnv": true,
+    "terminal.integrated.env.linux": {
+        "adb":"platform-tools/adb"
+    }
+}
