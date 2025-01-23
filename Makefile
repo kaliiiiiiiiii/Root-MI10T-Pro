@@ -5,8 +5,8 @@ FBT=${PT}/fastboot
 
 PDUMPD=payload-dumper-go
 PDUMP=$(PDUMPD)/$(PDUMPD)
-PBIN=bin/payload.bin
-PATCHED=bin/init_boot.patched.img
+PATCHED=bin/boot.patched.img
+TWRPF=twrp-3.7.0_12-v7.2_A12-apollo-skkk.img
 
 deps:
 	mkdir -p apks
@@ -20,30 +20,36 @@ deps:
 	curl -sL https://github.com/ssut/payload-dumper-go/releases/download/1.3.0/payload-dumper-go_1.3.0_linux_amd64.tar.gz | tar zxvf - -C $(PDUMPD)
 	chmod +x $(PDUMP)
 
+	# from https://xdaforums.com/t/recovery-twrp-3-7-0-unofficial-mi-10t-pro.4518491/
+	curl -sL https://xdaforums.com/attachments/twrp-3-7-0_12-v7-2_a12-apollo-skkk-zip.5826217 -o bin/twrp.zip
+	unzip bin/twrp.zip $(TWRPF) -d bin/
+	mv bin/$(TWRPF) bin/twrp.img
+	rm bin/twrp.zip
 
-boot-loader:
-	${ADB} reboot bootloader
-
-oem-unlock:
-	-$(MAKE) boot-loader
-	$(FBT) flashing unlock
-
-extact-boot:
-	mkdir -p bin
-	ZIP=$$( $(ADB) shell ls -p /storage/emulated/0/*.zip ); \
-	ZIPL=bin/$$(basename $$ZIP); \
-	$(ADB) pull $$ZIP $$ZIPL
-	unzip -j $$ZIPL payload.bin -d bin
-	$(PDUMP) -o bin -p init_boot $(PBIN)
-	$(ADB) push bin/init_boot.img /storage/emulated/0/Download/init_boot.img
+extract-boot:
+	ZIP=$$(ls -1 bin/miui*.zip | tr '\n' '\0' | xargs -0 -n 1 basename); \
+	unzip -o -j bin/$$ZIP boot.img -d bin
+	$(ADB) push bin/boot.img sdcard
 
 pull-patched:
 	PATCHED=$$( $(ADB) shell ls -p /storage/emulated/0/Download/magisk_patched-*.img | tail -n1); \
 	$(ADB) pull $$PATCHED $(PATCHED)
 
+boot-loader:
+	${ADB} reboot bootloader
+
+flash-twrp:
+	# from fastboot
+	$(FBT) flash recovery bin/twrp.img
+
 flash-patched:
-	$(FBT) flash init_boot $(PATCHED)
-	$(FBT) reboot
+	$(FBT) flash boot $(PATCHED)
+
+flash-oem:
+	# from twrp
+	ZIP=$$(ls -1 bin/miui*.zip | tr '\n' '\0' | xargs -0 -n 1 basename); \
+	$(ADB) push bin/$$ZIP tmp; \
+	$(ADB) shell twrp install tmp/$$ZIP
 
 clean:
 	rm -rf bin

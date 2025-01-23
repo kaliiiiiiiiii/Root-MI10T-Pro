@@ -1,58 +1,45 @@
-## Enable developer options
-
-1. Boot the phone, skip all steps where possible
-2. Navigate to `Settings`->`About Device`->`Version`
-3. Tap 7 times on `Version No.` until `Developer Options` are enabled
-
-## Enable ADB & OEM Unlocking
-1. Navigate to `Settings`->`System & Updates`->`Developer Options`
-2. Toggle (enable) `OEM Unlocking` and ` USB debugging`
+## Update to latest
+Ensure the MIUI version is `V14.0.1.0.SJDMIXM` (latest since [EOL](https://trust.mi.com/misrc/updates/phone/#:~:text=Mi%2010T%20Pro))
 
 ## Unlock OEM
-Make sure your device is connected over a USB-cable which supports **full** data transfer.
+Follow instructions at [miui.com/unlock/download_en.html](https://en.miui.com/unlock/download_en.html)
 
-> **Warning** \
-> This will delete all previous on the device stored data. Ensure to make a backup if necceceary.
+## Enable ADB
 
-Run (& accept prompt on mobile)
-```bash
-sudo make oem-unlock
-```
+1. Boot the phone, skip all steps where possible
+2. Navigate to `Settings`->`About Phone`
+3. Tap several times on `MIUI version` until `Developer Options` are enabled
+4. Navigate to `Settings`->`Additional Settings`->`Developer options`
+5. Toggle (enable) `USB debugging`
 
-Now repeat (without skipping all steps) [Enable developer options](#enable-developer-options) & [Enable ADB](#enable-adb--oem-unlocking)
+## Download current OTA ROM
+1. Download the latest stable rom from [c.mi.com/global/miuidownload/detail/device/1900386](https://c.mi.com/global/miuidownload/detail/device/1900386) (or [xmfirmwareupdater.com/miui/apollo](https://xmfirmwareupdater.com/miui/apollo/#google_vignette)) to `./bin`
 
-
-## Install all updates
-1. Navigate to **Settings**->`System & Updates`->`Sowftware updates`
-2. If an update is available: \
-    a. Install the update \
-    b. Reboot \
-    c. repeat [Install all updates](#install-all-updates) \
-    There should be no pending updates now.
-3. Navigate to `Sowftware updates`->*Three dots menu*->`Auto update`
-4. Choose `Do not allow` for `Auto download`
-5. Ensure `Auto-update overnight` is turned off.
-
-## Download current OEM
-1. Download [Oxygen Updater](https://play.google.com/store/apps/details?id=com.arjanvlek.oxygenupdater) and [Magisk](https://github.com/topjohnwu/Magisk/releases/latest) on the device.
-2. Open **Oxygen updater**
-3. For `Update method`, choose `Stable (full)`
-4. Navigate to **Oxygen Updater**->`Settings`
-5. Toggle (enable) `Advanced mode`
-9. Click on `Download update` in **Oxygen Updater**
-
-## Extract init_boot
+## Extract boot.img
 Run
 ```bash
-sudo make extact-boot
+sudo make extract-boot
 ```
 
-## Patch init_boot
+## Patch boot.img
+1. [Magisk](https://github.com/topjohnwu/Magisk/releases/latest) on the device.
 1. Navigate to `Magisk`->`Install`->`Select patch file`
-2. Select the file at `Downloads/init_boot.img`
+2. Select the file at `/boot.img`
 3. Click on `Let's Go` to start the patching.
 
-## Flash patched image
+## Flash patched image & TWRP
 1. Run `sudo make pull-patched`
 2. Run `sudo make boot-loader`
 3. When booted into fastboot, run `sudo make flash-patched`
+
+
+## Install TWRP
+> **warning**
+> This uses an unofficial and not open-source version of TWRP from [recovery-twrp-3-7-0-unofficial-mi-10t-pro | xdaforums](https://xdaforums.com/t/recovery-twrp-3-7-0-unofficial-mi-10t-pro.4518491/)
+
+When booted into fastboot, run
+```bash
+sudo make flash-twrp
+```
+
+

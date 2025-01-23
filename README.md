@@ -1,21 +1,21 @@
-# Root-OP12
-Instructions &amp; Automation for rooting a OP12 device
+# Root-MI10T-Pro
+Instructions &amp; Automation for rooting a MI10T-Pro device
 
 > **Disclamer** \
 > I am not responsible or liable in any way for any damages related to this project!
 
 > **Warning** \
 > Rooting your phone will invalidate the warranty! \
-> Make sure to **only** have the target device connected over USB.
+> Make sure to **only** have the target device connected over USB.s
 
 ## Dependencies
-Linux only for now
+Windows for unlocking the bootloader, Linux for the rest
 
 Install dependencies
 ```bash
 sudo apt install make
-git clone https://github.com/kaliiiiiiiiii/Root-OP12
-cd Root-OP12
+git clone https://github.com/kaliiiiiiiiii/Root-MI10T-Pro
+cd Root-MI10T-Pro
 
 sudo make deps
 ```
@@ -31,7 +31,6 @@ Follow [InitialSetup](docs/InitialSetup.md) (Unlock bootloader)
 5. Reboot the device
 
 ## References
-- [Raymo111/oneplus-7t-root](https://github.com/Raymo111/oneplus-7t-root)
-- [ssut/payload-dumper-go](https://github.com/ssut/payload-dumper-go)
-- [shortguide-02-04-2024-bootloader-root-safetynet - xdaforums](https://xdaforums.com/t/shortguide-02-04-2024-bootloader-root-safetynet.4654608/)
-- [how-to-root-oneplus-12r-a-complete-guide - xdaforums](https://xdaforums.com/t/how-to-root-oneplus-12r-a-complete-guide.4663162/)
+- [kaliiiiiiiiii/Root-OP12)](https://github.com/kaliiiiiiiiii/Root-OP12)
+- [miui.com/unlock/download_en.html](https://en.miui.com/unlock/download_en.html)
+- [recovery-twrp-3-7-0-unofficial-mi-10t-pro | xdaforums](https://xdaforums.com/t/recovery-twrp-3-7-0-unofficial-mi-10t-pro.4518491/)
